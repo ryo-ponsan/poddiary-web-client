@@ -1,17 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from 'react';                 // Reactをインポート
+import ReactDOM from 'react-dom/client';    // ReactDOMの新しいAPIをインポート
+import App from './App';                    // メインのAppコンポーネントをインポート
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
+// 1. createRoot()を使って、描画するDOMの場所（#root）を指定
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// 2. root.render()で、Appコンポーネントをレンダリング
 root.render(
   <React.StrictMode>
-    <App />
+    <App />  {/* Appコンポーネントがこの場所に描画される */}
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
