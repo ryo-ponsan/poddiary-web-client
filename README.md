@@ -15,14 +15,17 @@ PodDiaryは、ユーザーがポッドキャスト番組やエピソードに対
     - [1. **App.js**](#1-appjs)
     - [2. **PrivateRoute**](#2-privateroute)
     - [3. **LoginPage.js**](#3-loginpagejs)
-    - [4. **SignupPage.js**](#4-signuppagejs)
-    - [5. **MyPage.js**](#5-mypagejs)
+    - [**SpotifyCallbackPage.js**](#spotifycallbackpagejs)
+      - [追記箇所：](#追記箇所)
+      - [追記内容：](#追記内容)
     - [6. **PostDiaryPage.js**](#6-postdiarypagejs)
   - [認証機能](#認証機能)
   - [日記機能](#日記機能)
   - [スタイルとUI](#スタイルとui)
   - [セットアップ](#セットアップ)
     - [環境構築](#環境構築)
+      - [Spotify API用の設定](#spotify-api用の設定)
+  - [TODO](#todo)
 
 ## 使用技術
 
@@ -39,6 +42,8 @@ src/
 ├── components/     # 再利用可能なコンポーネント
 ├── pages/          # 各ページコンポーネント
 ├── services/       # 認証やAPI関連のサービス
+│   ├── auth.js     # 通常の認証処理を管理
+│   ├── spotifyClient.js  # Spotify認証とAPIリクエスト用のクライアント
 ├── App.js          # アプリのエントリーポイント
 ├── index.css       # グローバルスタイル（Tailwindをインポート）
 └── index.js        # Reactのエントリーポイント
@@ -72,8 +77,9 @@ export default function PrivateRoute({ children }) {
 ```
 
 ### 3. **LoginPage.js**
-ユーザーが手動で入力する形式のSpotifyログイン機能を提供しています。入力データは以下の形式で送信されます。
+Spotify認証と通常の手動ログイン機能を提供しています。Spotifyログインボタンを押すと、SpotifyのOAuth認証ページにリダイレクトされ、同意後にアクセストークンを取得してログイン処理を行います。
 
+- 手動ログイン：ユーザーは以下の情報を手動で入力します。
 ```json
 {
   "spotify_id": "user_spotify_id",
@@ -84,6 +90,36 @@ export default function PrivateRoute({ children }) {
   "subscription_type": "premium"
 }
 ```
+
+
+### **SpotifyCallbackPage.js**
+
+#### 追記箇所：
+`主要コンポーネント` セクションに **SpotifyCallbackPage.js** を追加します。
+
+#### 追記内容：
+
+```md
+### 7. **SpotifyCallbackPage.js**
+Spotify認証後にリダイレクトされるページです。このページでは、Spotifyからの認証コードを受け取り、アクセストークンを取得し、ユーザーのSpotifyアカウント情報を取得します。
+
+- **アクセストークン取得**: 認証コードを `getSpotifyAccessToken()` 関数に渡し、アクセストークンとリフレッシュトークンを取得します。
+- **アカウント情報取得**: 取得したアクセストークンを使用して、`getAccountInfo()`でユーザーのSpotifyアカウント情報を取得し、画面に表示します。
+
+```js
+useEffect(() => {
+  const fetchData = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      await getSpotifyAccessToken(code);
+      const accountInfo = await getAccountInfo();
+      setAccountInfo(accountInfo);
+    }
+  };
+  fetchData();
+}, []);
+---
 
 ### 4. **SignupPage.js**
 サインアップページでは、メールアドレス、パスワード、ユーザー名を手動で入力し、新規ユーザーを登録します。
@@ -124,6 +160,18 @@ export default function PrivateRoute({ children }) {
   - ログイン: `/api/auth/login/`
   - サインアップ: `/api/auth/signup/`
   - Spotifyログイン（手動）: `/api/auth/spotify-login/`
+- **Spotify OAuth認証**:
+  PodDiaryでは、SpotifyのOAuth 2.0を使用して、ユーザーのSpotifyアカウント情報を取得します。以下は、Spotify認証フローの概要です。
+
+  - **redirectToSpotifyLogin()**: 
+    Spotifyの認証ページにユーザーをリダイレクトします。PKCE認証のためにコードチャレンジとコードベリファイアを生成し、リダイレクトURLに追加します。
+
+  - **getSpotifyAccessToken(code)**:
+    認証後にSpotifyから返される認証コードを使用して、アクセストークンを取得します。取得したアクセストークンとリフレッシュトークンは`localStorage`に保存され、後続のAPIリクエストに使用されます。
+
+  - **getAccountInfo()**:
+    アクセストークンを使用して、Spotifyのユーザーアカウント情報を取得します。アカウント情報には、表示名、メールアドレス、国、プロフィール画像などが含まれます。
+
 
 ## 日記機能
 
@@ -192,3 +240,20 @@ export default function PrivateRoute({ children }) {
    ```bash
    npm run build
    ```
+
+#### Spotify API用の設定
+
+1. **Spotify Developerダッシュボードにアプリを登録**  
+   Spotifyの[Developer Dashboard](https://developer.spotify.com/dashboard/)にアクセスし、アプリケーションを作成します。
+
+2. **クライアントIDの取得**  
+   作成したアプリケーションのクライアントIDを取得し、`spotifyClient.js`に追加します。
+
+3. **リダイレクトURIの設定**  
+   ダッシュボードでリダイレクトURIとして`http://localhost:3000/callback`を登録します。
+
+4. **環境変数の設定**  
+   環境変数や設定ファイルに、SpotifyのクライアントID、リダイレクトURIを設定します。
+
+## TODO
+- APIリクエストの[レートリミット](https://developer.spotify.com/documentation/web-api/concepts/rate-limits)考慮

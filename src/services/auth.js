@@ -109,7 +109,7 @@ export const isLoggedIn = () => {
 
 // ログアウト処理
 export const logout = () => {
-localStorage.removeItem('access');
-localStorage.removeItem('refresh');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
 };
   

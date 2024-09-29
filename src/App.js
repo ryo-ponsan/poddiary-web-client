@@ -9,6 +9,9 @@ import PrivateRoute from './components/PrivateRoute';  // PrivateRouteをイン�
 import { useState, useEffect } from 'react';
 import './index.css';
 
+// Spotify認証後のコールバックページをインポート
+import SpotifyCallbackPage from './pages/SpotifyCallbackPage'; // ここを追加
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -48,6 +51,8 @@ function App() {
         {/* PrivateRouteでログイン必須ページを保護 */}
         <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
         <Route path="/post-diary" element={<PrivateRoute><PostDiaryPage /></PrivateRoute>} />
+        {/* Spotifyの認証後のコールバックルートを追加 */}
+       <Route path="/callback" element={<SpotifyCallbackPage setLoggedIn={setLoggedIn}/>} /> {/* ここを追加 */}
       </Routes>
     </Router>
   );

@@ -8,7 +8,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // 2. root.render()で、Appコンポーネントをレンダリング
 root.render(
-  <React.StrictMode>
-    <App />  {/* Appコンポーネントがこの場所に描画される */}
-  </React.StrictMode>
+  // <React.StrictMode>
+    
+  // </React.StrictMode>
+  <App /> 
 );
