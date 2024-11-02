@@ -52,7 +52,7 @@ function App() {
         <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
         <Route path="/post-diary" element={<PrivateRoute><PostDiaryPage /></PrivateRoute>} />
         {/* Spotifyの認証後のコールバックルートを追加 */}
-       <Route path="/callback" element={<SpotifyCallbackPage setLoggedIn={setLoggedIn}/>} /> {/* ここを追加 */}
+       <Route path="/callback" element={<SpotifyCallbackPage setLoggedIn={setLoggedIn}/>} /> ここを追加
       </Routes>
     </Router>
   );

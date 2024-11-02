@@ -7,7 +7,8 @@ const SPOTIFY_TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
 // クライアント情報（SpotifyのAPIダッシュボードから取得）
 const CLIENT_ID = '7171eb522c37422f8a040eb37e3b68e8'; // Spotifyから取得したクライアントID
 // const REDIRECT_URI = 'http://localhost:3000/callback'; // 認証後のリダイレクトURL
-const REDIRECT_URI = 'http://localhost:3000/callback'; // 認証後のローカル環境リダイレクトURL
+// const REDIRECT_URI = 'http://localhost:3000/callback'; // 認証後のローカル環境リダイレクトURL
+const REDIRECT_URI = process.env.REACT_APP_SPOTIFY_REDIRECT_URI; // 認証後のローカル環境リダイレクトURL
 const SCOPES = 'user-read-private user-read-email'; // 必要なスコープ
 
 // PKCE認証に必要なコードチャレンジとコードベリファイアの生成関数

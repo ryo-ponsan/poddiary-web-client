@@ -83,7 +83,7 @@ export default function SignupPage() {
             value={subscriptionType}
             onChange={(e) => setSubscriptionType(e.target.value)}
           />
-          <button onClick={handleManualSignup}>Sign Up</button>
+          <button onClick={handleManualSignup}>Handle Sign Up</button>
     
           {/* トークンの可視化 */}
           {tokens && (
