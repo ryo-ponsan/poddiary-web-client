@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // useNavigateをインポート
+import { redirectToSpotifyLogin } from '../services/spotifyClient';  // spotifyClientを使用
 import { loginWithSpotify, getTokens } from '../services/auth';  // loginWithSpotify関数とgetTokens関数を使用
 
 export default function LoginPage({setLoggedIn}) {
-  const [spotifyId, setSpotifyId] = useState('ryo-test-id');  // 初期値として "test"
-  const [username, setUsername] = useState('ryo-test');  // 初期値として "test_user"
-  const [email, setEmail] = useState('ryo-test@gmail.com');  // 初期値として "test@gmail.com"
+  const [spotifyId, setSpotifyId] = useState('t-id');  // 初期値として "test"
+  const [username, setUsername] = useState('t-user');  // 初期値として "test_user"
+  const [email, setEmail] = useState('t@gmail.com');  // 初期値として "test@gmail.com"
   const [profileImage, setProfileImage] = useState('');  // プロフィール画像は空に設定
   const [country, setCountry] = useState('JP');  // 初期値として "JP"
-  const [subscriptionType, setSubscriptionType] = useState('premium');  // 初期値として "premium"
+  const [subscriptionType, setSubscriptionType] = useState('Premium');  // 初期値として "premium"
   const [errorMessage, setErrorMessage] = useState('');
   const [tokens, setTokens] = useState(null); // トークンを保持
 
@@ -35,6 +36,12 @@ export default function LoginPage({setLoggedIn}) {
       console.error('Login error', error);
       setErrorMessage('Login failed! Please check your credentials.');
     }
+  };
+
+  // Spotifyでログイン処理
+  const handleSpotifyLogin = async () => {
+    console.log("redireeeeeeeeeeeeeeect");
+    redirectToSpotifyLogin();  // Spotifyの認証ページにリダイレクト
   };
 
   return (
@@ -79,7 +86,12 @@ export default function LoginPage({setLoggedIn}) {
         <option value="free">Free</option>
         <option value="premium">Premium</option>
       </select>
-      <button onClick={handleLogin}>Login with Spotify</button>
+      <button onClick={handleLogin}>Login with Spotify-handle</button>
+
+      {/* Spotifyログインボタン */}
+      <button onClick={handleSpotifyLogin} style={{ marginTop: '20px', backgroundColor: '#1DB954', color: 'white', padding: '10px', borderRadius: '5px' }}>
+        Spotifyでログイン
+      </button>
 
       {tokens && (
         <div>

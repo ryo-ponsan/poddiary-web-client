@@ -19,13 +19,13 @@ export default function MyPage() {
 
     try {
       // ユーザー情報を取得
-      const userResponse = await axios.get('http://localhost:8000/api/users/me/', {
+      const userResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/users/me/`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       setUserData(userResponse.data);
 
       // 日記一覧を取得
-      const diariesResponse = await axios.get('http://localhost:8000/api/diaries/user_diaries/', {
+      const diariesResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/diaries/user_diaries/`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       setDiaries(diariesResponse.data);

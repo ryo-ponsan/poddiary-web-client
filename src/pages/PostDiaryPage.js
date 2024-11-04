@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';  // useNavigateをインポー�
 import axios from 'axios';
 
 export default function PostDiaryPage() {
-  const [podcastTitle, setPodcastTitle] = useState('');
-  const [podcastTitleId, setPodcastTitleId] = useState('');
-  const [episodeTitle, setEpisodeTitle] = useState('');
-  const [episodeTitleId, setEpisodeTitleId] = useState('');
-  const [diaryText, setDiaryText] = useState('');
+  const [podcastTitle, setPodcastTitle] = useState('pd');
+  const [podcastTitleId, setPodcastTitleId] = useState('pd-id');
+  const [episodeTitle, setEpisodeTitle] = useState('pdep');
+  const [episodeTitleId, setEpisodeTitleId] = useState('pdep-id');
+  const [diaryText, setDiaryText] = useState('test text');
   const [rating, setRating] = useState(2.5);
   const [listenedOn, setListenedOn] = useState('');
   const [error, setError] = useState('');
@@ -39,7 +39,7 @@ export default function PostDiaryPage() {
     };
 
     try {
-      const response = await axios.post('http://localhost:8000/api/diaries/', diaryData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/diaries/`, diaryData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

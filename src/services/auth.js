@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export const signup = async (email, password, username) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/auth/signup/', {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/signup/`, {
         email,
         password,
         username,
@@ -31,7 +31,7 @@ return response.data;
 export const spotifyLogin = async () => {
     try {
         // Spotify認証画面にリダイレクト
-        const response = await axios.get('http://localhost:8000/api/auth/spotify-login-url/');
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/auth/spotify-login-url/`);
         window.location.href = response.data.url;  // Spotify認証ページにリダイレクト
     } catch (error) {
         throw error.response ? error.response.data : new Error('Network Error');
@@ -41,7 +41,8 @@ export const spotifyLogin = async () => {
 // 手動入力によるSpotifyサインアップ処理
 export const signupWithManualInput = async (data) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/auth/spotify-login/', data);
+      console.log("API Base URL:", process.env.REACT_APP_API_BASE_URL);
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/spotify-login/`, data);
   
       // JWTトークンをlocalStorageに保存
       localStorage.setItem('accessToken', response.data.access);
@@ -56,7 +57,7 @@ export const signupWithManualInput = async (data) => {
 // 手動入力によるSpotifyログイン処理
 export const loginWithSpotify = async (data) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/auth/spotify-login/', data);
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/spotify-login/`, data);
   
       // JWTトークンをlocalStorageに保存
       localStorage.setItem('accessToken', response.data.access);
@@ -79,7 +80,7 @@ export const authenticatedRequest = async (url, method = 'GET', data = null) => 
     try {
       const config = {
         method,
-        url: `http://localhost:8000${url}`,
+        url: `${process.env.REACT_APP_API_BASE_URL}${url}`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -109,7 +110,7 @@ export const isLoggedIn = () => {
 
 // ログアウト処理
 export const logout = () => {
-localStorage.removeItem('access');
-localStorage.removeItem('refresh');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
 };
   
