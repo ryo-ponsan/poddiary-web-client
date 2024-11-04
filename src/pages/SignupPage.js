@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';  // useNavigateをインポー�
 import { signupWithManualInput, getTokens } from '../services/auth';  // サインアップ関数を呼び出す
 
 export default function SignupPage() {
-  const [spotifyId, setSpotifyId] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  const [spotifyId, setSpotifyId] = useState('t-id');
+  const [username, setUsername] = useState('t-user');
+  const [email, setEmail] = useState('t@gmail.com');
   const [profileImage, setProfileImage] = useState('');
-  const [country, setCountry] = useState('');
-  const [subscriptionType, setSubscriptionType] = useState('');
+  const [country, setCountry] = useState('JP');
+  const [subscriptionType, setSubscriptionType] = useState('Premium');
   const [errorMessage, setErrorMessage] = useState('');
   const [tokens, setTokens] = useState(null); // JWTトークンを保存するステート
 

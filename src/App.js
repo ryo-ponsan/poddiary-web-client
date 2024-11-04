@@ -11,6 +11,7 @@ import './index.css';
 
 // Spotify認証後のコールバックページをインポート
 import SpotifyCallbackPage from './pages/SpotifyCallbackPage'; // ここを追加
+import HelpRequestPage from './pages/HelpRequestPage';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -33,6 +34,7 @@ function App() {
             <>
               <li><Link to="/mypage">My Page</Link></li>
               <li><Link to="/post-diary">Post Diary</Link></li>
+              <li><Link to="/help">Help</Link></li>
               <li><button onClick={handleLogout}>Logout</button></li>
             </>
           ) : (
@@ -51,6 +53,7 @@ function App() {
         {/* PrivateRouteでログイン必須ページを保護 */}
         <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
         <Route path="/post-diary" element={<PrivateRoute><PostDiaryPage /></PrivateRoute>} />
+        <Route path="/help" element={<PrivateRoute><HelpRequestPage /></PrivateRoute>} />
         {/* Spotifyの認証後のコールバックルートを追加 */}
        <Route path="/callback" element={<SpotifyCallbackPage setLoggedIn={setLoggedIn}/>} /> ここを追加
       </Routes>

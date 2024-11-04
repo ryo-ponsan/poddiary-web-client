@@ -4,9 +4,9 @@ import { redirectToSpotifyLogin } from '../services/spotifyClient';  // spotifyC
 import { loginWithSpotify, getTokens } from '../services/auth';  // loginWithSpotify関数とgetTokens関数を使用
 
 export default function LoginPage({setLoggedIn}) {
-  const [spotifyId, setSpotifyId] = useState('test-id');  // 初期値として "test"
-  const [username, setUsername] = useState('test-user');  // 初期値として "test_user"
-  const [email, setEmail] = useState('test@gmail.com');  // 初期値として "test@gmail.com"
+  const [spotifyId, setSpotifyId] = useState('t-id');  // 初期値として "test"
+  const [username, setUsername] = useState('t-user');  // 初期値として "test_user"
+  const [email, setEmail] = useState('t@gmail.com');  // 初期値として "test@gmail.com"
   const [profileImage, setProfileImage] = useState('');  // プロフィール画像は空に設定
   const [country, setCountry] = useState('JP');  // 初期値として "JP"
   const [subscriptionType, setSubscriptionType] = useState('Premium');  // 初期値として "premium"
