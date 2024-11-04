@@ -59,6 +59,11 @@ export const loginWithSpotify = async (data) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/spotify-login/`, data);
   
+        // 復帰オプションの確認
+      if (response.data.reactivate_option) {
+        return { reactivateOption: true, userId: response.data.user_id };
+      }
+
       // JWTトークンをlocalStorageに保存
       localStorage.setItem('accessToken', response.data.access);
       localStorage.setItem('refreshToken', response.data.refresh);
@@ -114,3 +119,16 @@ export const logout = () => {
   localStorage.removeItem('refreshToken');
 };
   
+// auth.jsでのreactivateUser関数の修正例
+export const reactivateUser = async (userId) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_BASE_URL}/api/users/reactivate/`,
+      { user_id: userId },
+      { headers: {} } // ヘッダーを空にすることでトークンを送信しない
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error('Network Error');
+  }
+};
