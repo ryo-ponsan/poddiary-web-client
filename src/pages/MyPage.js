@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getTokens ,logout } from '../services/auth'; // トークン取得関数
-import { FaPodcast, FaStar, FaCalendarAlt, FaEdit, FaTrashAlt, FaClipboard } from 'react-icons/fa'; // アイコンに追加
+import { FaPodcast, FaStar, FaCalendarAlt, FaEdit, FaTrashAlt, FaClipboard, FaTrash } from 'react-icons/fa'; // アイコンに追加
 
 export default function MyPage() {
   const [userData, setUserData] = useState(null);  // ユーザー情報を保持
@@ -92,8 +92,8 @@ export default function MyPage() {
             <h2 className="text-2xl font-semibold mb-2">Welcome, {userData.username}!</h2>
             <p><strong>Email:</strong> {userData.email}</p>
           </div>
-          <button className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteAccount}>
-            退会
+          <button className="flex center bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded" onClick={handleDeleteAccount}>
+          <FaTrash className="text-black-500 mr-1" />退会
           </button>
         </div>
       )}
